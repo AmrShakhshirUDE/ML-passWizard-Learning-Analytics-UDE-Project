@@ -3,6 +3,14 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 # import graphviz #to export tree in decsion
+#FeatureSelection using chi2
+from sklearn.feature_selection import SelectKBest, chi2
+#FeatureSelection using recursive
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import RFECV
+#FeatureSelection using SelectFromModel
+from sklearn.svm import LinearSVC
+from sklearn.feature_selection import SelectFromModel
 
 from sklearn import datasets
 from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
@@ -39,7 +47,8 @@ from sklearn.feature_selection import SelectKBest, chi2
 
 # url="./finalComb.csv"
 # url="./originalComb.csv"
-url="./modfirstCombined.csv"
+# url="./modfirstCombined.csv"
+url="./numValuesComb.csv"
 # url="./newAttr.csv"
 # url="./numInOut.csv"
 # dataPro=pd.read_csv(url,error_bad_lines=False)
@@ -74,13 +83,12 @@ dataPro=pd.read_csv(url, sep=' ')
 
 
 
-# # separatione data into train & test
-# X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state = 10) #'random_state' just ensures that we get reproducible results every time.
 
 #Naive-Bais
-def naive_bayes(data, target):
-    # separatione data into train & test
-    X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state = 10) #'random_state' just ensures that we get reproducible results every time.
+# def naive_bayes(data, target):
+def naive_bayes(X_train, X_test, y_train, y_test):
+    # # separatione data into train & test
+    # X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state = 10) #'random_state' just ensures that we get reproducible results every time.
     #create an object of the type GaussianNB
     gnb = GaussianNB()
     #train the algorithm on training data and predict using the testing data
@@ -88,9 +96,9 @@ def naive_bayes(data, target):
     #print(pred.tolist())
     #print the accuracy score of the model
     print("Naive-Bayes accuracy : ",accuracy_score(y_test, pred, normalize = True))
-    #F1 scores
-    print('precision_recall_fscore_support: ',precision_recall_fscore_support(y_test, pred, average='macro'))
-    print(f1_score(y_test,pred, average=None))
+    # #F1 scores
+    # print('precision_recall_fscore_support: ',precision_recall_fscore_support(y_test, pred, average='macro'))
+    # print(f1_score(y_test,pred, average=None))
 
 # # Instantiate the classification model and visualizer
 # # visualizer = ClassificationReport(gnb, classes=['fail','pass','good','V.good','excellent'])
@@ -101,9 +109,10 @@ def naive_bayes(data, target):
 # g = visualizer.poof() # Draw/show/poof the data
 
 #Support Vector Classification LinearSVC
-def SVC(data, target):
-    # separatione data into train & test
-    X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state = 10) #'random_state' just ensures that we get reproducible results every time.
+# def SVC(data, target):
+def SVC(X_train, X_test, y_train, y_test):
+    # # separatione data into train & test
+    # X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state = 10) #'random_state' just ensures that we get reproducible results every time.
     #create an object of type LinearSVC
     svc_model = LinearSVC(random_state=0) #instruction to the built-in random number generator to shuffle the data in a specific order
     #train the algorithm on training data and predict using the testing data
@@ -118,9 +127,10 @@ def SVC(data, target):
 # # g = visualizer.poof() # Draw/show/poof the data
 
 #K-Neighbors Classifier
-def kNeigh(data, target):
-    # separatione data into train & test
-    X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state = 10) #'random_state' just ensures that we get reproducible results every time.
+# def kNeigh(data, target):
+def kNeigh(X_train,X_test,y_train, y_test):
+    # # separatione data into train & test
+    # X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state = 10) #'random_state' just ensures that we get reproducible results every time.
     #create object of the classifier
     neigh = KNeighborsClassifier(n_neighbors=3)
     #Train the algorithm
@@ -137,9 +147,10 @@ def kNeigh(data, target):
 # g = visualizer.poof() # Draw/show/poof the data
 
 # Decision Tree
-def decTree(data, target):
-    # separatione data into train & test
-    X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state = 10) #'random_state' just ensures that we get reproducible results every time.
+# def decTree(data, target):
+def decTree(X_train,X_test,y_train, y_test):
+    # # separatione data into train & test
+    # X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state = 10) #'random_state' just ensures that we get reproducible results every time.
     #create object of the classifier
     dTree = tree.DecisionTreeClassifier()
     #Train the algorithm
@@ -185,9 +196,9 @@ dataPro['absences']=le.fit_transform(dataPro['absences'])
 dataPro['FailHigh']=le.fit_transform(dataPro['FailHigh'])
 dataPro['alcSudyTime']=le.fit_transform(dataPro['alcSudyTime'])
 dataPro['parentsEdu']=le.fit_transform(dataPro['parentsEdu'])
-dataPro['GC1']=le.fit_transform(dataPro['GC1'])
-dataPro['GC2']=le.fit_transform(dataPro['GC2'])
-dataPro['GC3']=le.fit_transform(dataPro['GC3'])
+dataPro['GC1']=le.fit_transform(dataPro['GN1'])
+dataPro['GC2']=le.fit_transform(dataPro['GN2'])
+dataPro['GC3']=le.fit_transform(dataPro['GN3'])
 
 
 cols=["school","sex","age","address",'famsize','Pstatus','Medu','Fedu','Mjob','Fjob','reason',
@@ -195,6 +206,25 @@ cols=["school","sex","age","address",'famsize','Pstatus','Medu','Fedu','Mjob','F
 'nursery','higher','internet','romantic','famrel','freetime','goout','Dalc','Walc','health','absences',
 'FailHigh','alcSudyTime','parentsEdu']
 
+# cols=["school","sex",'Pstatus','studytime','failures','schoolsup','paid','activities',
+# 'higher','famrel','Dalc',] #selectFromModel SVC 70.76% l2
+
+# cols=['studytime','failures','famrel','Dalc',] #selectFromModel SVC 66.96% l2 then l1
+
+# cols=["age",'Medu','Fedu','Mjob','Fjob','reason','studytime','failures','famrel','freetime','absences',
+# 'FailHigh','alcSudyTime','parentsEdu'] #selectFromModel SVC 63.84% l1
+
+# cols=['Medu','reason','studytime','failures','famrel'] #selectFromModel SVC 66.92% l1 then l2
+
+# cols=["school","age",'Medu','studytime','failures','higher','Dalc','absences','alcSudyTime','parentsEdu'] #Choosen by recursive & chi2 68.46% SVL
+
+
+# cols=["age",'Medu','Fedu','Mjob','Fjob','studytime','failures','higher',
+# 'famrel','absences','FailHigh','alcSudyTime','parentsEdu'] #Choosen by recursive 66.15% SVL
+
+# cols=['failures','absences','alcSudyTime'] #Choosen by recursive & chi2 66.92% SVL
+
+# cols=['failures','higher','absences','Dalc',"school"] #Choosen by chi2 70.76% SVL
 # cols=['school','Medu','Fedu','studytime','Dalc','failures','higher']
 # cols=['school','Medu','studytime','Dalc','failures','higher']
 # cols=['school','Medu','Fedu','studytime','failures','higher']
@@ -208,25 +238,41 @@ cols=["school","sex","age","address",'famsize','Pstatus','Medu','Fedu','Mjob','F
 # cols=['age','guardian','failures','higher']# highest for dTree 71.53
 
 
+
+
 data = dataPro[cols]
 #assigning the Oppurtunity Result column as target
 # tarCol = [' GC1',' GC2',' GC3']
-tarCol= ['GC1']
+tarCol= ['GN1']
 target = dataPro[tarCol]
 
-# imax0=imax1=imax2=imax3=imax4=imax5=imax6=imax7=imax8=imax9=0
-# imax10=imax11=imax12=imax13=imax14=imax15=imax16=imax17=imax18=imax19=0
-# imax20=imax21=imax22=imax23=imax24=imax25=imax26=imax27=imax28=imax29=0
-# imax30=imax31=imax32=0
+# separatione data into train & test
+X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state = 10) #'random_state' just ensures that we get reproducible results every time.
 
-# i = 0
-# while i < len(cols):
-#     cols[i]
-#     # data= dataPro[cols[i]]
-#     print(data)
-#     # naive_bayes(data, target)
-#     i+=1
+# # chi2 method of selecting features
+# sel = SelectKBest(chi2,1)
+# sel.fit(X_train,y_train)
+# print(sel.get_support())
+# # print(sel.scores_)
 
+
+# #Recursive method for feature selection
+# recSel= RFECV(RandomForestClassifier(),scoring='accuracy')
+# recSel.fit(X_train,y_train.values.ravel())
+# print(recSel.get_support())
+# # print(recSel.fit(X_train,y_train.values.ravel()))
+# # # print(recSel.score(X_train,y_train))
+
+# SelectFromModel method for feature selection
+sfm= SelectFromModel(LinearSVC(C=0.01, penalty='l2',dual=False))
+sfm.fit(X_train,y_train.values.ravel())
+print(sfm.get_support())
+# # print(recSel.fit(X_train,y_train.values.ravel()))
+# # # print(recSel.score(X_train,y_train))
+
+
+
+# #get accuracy for each attributes individually
 # for x in cols:
 #     print(x)
 #     col=[x]
@@ -234,10 +280,14 @@ target = dataPro[tarCol]
 #     decTree(data, target)
 #     kNeigh(data, target)
 
-naive_bayes(data, target)
-# SVC(data, target)
-# kNeigh(data, target)
-# decTree(data, target)
+# # naive_bayes(data, target)
+# # SVC(data, target)
+# # kNeigh(data, target)
+# # decTree(data, target)
+naive_bayes(X_train,X_test,y_train, y_test)
+SVC(X_train,X_test,y_train, y_test)
+kNeigh(X_train,X_test,y_train, y_test)
+decTree(X_train,X_test,y_train, y_test)
 
 #F1 scores
 # print('precision_recall_fscore_support: ',precision_recall_fscore_support(y_test, pred, average='macro'))
