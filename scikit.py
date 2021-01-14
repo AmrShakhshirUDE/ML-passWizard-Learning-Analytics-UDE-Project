@@ -33,9 +33,11 @@ from yellowbrick.classifier import ClassificationReport
 #Evaluating
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_recall_fscore_support
+from sklearn.metrics import precision_score
 
 #statistical measures
 from sklearn.feature_selection import SelectKBest, chi2
+
 
 
 # # random seed
@@ -96,6 +98,8 @@ def naive_bayes(X_train, X_test, y_train, y_test):
     #print(pred.tolist())
     #print the accuracy score of the model
     print("Naive-Bayes accuracy : ",accuracy_score(y_test, pred, normalize = True))
+    #Precision Score
+    print('precision_support: ',precision_score(y_test, pred, average='weighted'))
     # #F1 scores
     # print('precision_recall_fscore_support: ',precision_recall_fscore_support(y_test, pred, average='macro'))
     # print(f1_score(y_test,pred, average=None))
@@ -114,7 +118,7 @@ def SVC(X_train, X_test, y_train, y_test):
     # # separatione data into train & test
     # X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state = 10) #'random_state' just ensures that we get reproducible results every time.
     #create an object of type LinearSVC
-    svc_model = LinearSVC(random_state=0) #instruction to the built-in random number generator to shuffle the data in a specific order
+    svc_model = LinearSVC(random_state=0,dual=False) #instruction to the built-in random number generator to shuffle the data in a specific order
     #train the algorithm on training data and predict using the testing data
     pred = svc_model.fit(X_train, y_train.values.ravel()).predict(X_test)
     #print the accuracy score of the model
@@ -196,55 +200,31 @@ dataPro['absences']=le.fit_transform(dataPro['absences'])
 dataPro['FailHigh']=le.fit_transform(dataPro['FailHigh'])
 dataPro['alcSudyTime']=le.fit_transform(dataPro['alcSudyTime'])
 dataPro['parentsEdu']=le.fit_transform(dataPro['parentsEdu'])
-dataPro['GC1']=le.fit_transform(dataPro['GN1'])
-dataPro['GC2']=le.fit_transform(dataPro['GN2'])
-dataPro['GC3']=le.fit_transform(dataPro['GN3'])
+dataPro['GN1']=le.fit_transform(dataPro['GN1'])
+dataPro['GN2']=le.fit_transform(dataPro['GN2'])
+dataPro['GN3']=le.fit_transform(dataPro['GN3'])
 
 
-cols=["school","sex","age","address",'famsize','Pstatus','Medu','Fedu','Mjob','Fjob','reason',
-'guardian','traveltime','studytime','failures','schoolsup','famsup','paid','activities',
-'nursery','higher','internet','romantic','famrel','freetime','goout','Dalc','Walc','health','absences',
-'FailHigh','alcSudyTime','parentsEdu']
+# cols=["school","sex","age","address",'famsize','Pstatus','Medu','Fedu','Mjob','Fjob','reason',
+# 'guardian','traveltime','studytime','failures','schoolsup','famsup','paid','activities',
+# 'nursery','higher','internet','romantic','famrel','freetime','goout','Dalc','Walc','health','absences',
+# 'FailHigh','alcSudyTime','parentsEdu','GN1']
 
-# cols=["school","sex",'Pstatus','studytime','failures','schoolsup','paid','activities',
-# 'higher','famrel','Dalc',] #selectFromModel SVC 70.76% l2
+cols1=['higher','failures','school','age','absences']# highest for SVC 72.30
+cols2=['alcSudyTime','GN1'] #GN2 Naive-Bais 76.15 
+cols3=['GN1','GN2']# highest for Decision Tree ~ 73.85
 
-# cols=['studytime','failures','famrel','Dalc',] #selectFromModel SVC 66.96% l2 then l1
-
-# cols=["age",'Medu','Fedu','Mjob','Fjob','reason','studytime','failures','famrel','freetime','absences',
-# 'FailHigh','alcSudyTime','parentsEdu'] #selectFromModel SVC 63.84% l1
-
-# cols=['Medu','reason','studytime','failures','famrel'] #selectFromModel SVC 66.92% l1 then l2
-
-# cols=["school","age",'Medu','studytime','failures','higher','Dalc','absences','alcSudyTime','parentsEdu'] #Choosen by recursive & chi2 68.46% SVL
-
-
-# cols=["age",'Medu','Fedu','Mjob','Fjob','studytime','failures','higher',
-# 'famrel','absences','FailHigh','alcSudyTime','parentsEdu'] #Choosen by recursive 66.15% SVL
-
-# cols=['failures','absences','alcSudyTime'] #Choosen by recursive & chi2 66.92% SVL
-
-# cols=['failures','higher','absences','Dalc',"school"] #Choosen by chi2 70.76% SVL
-# cols=['school','Medu','Fedu','studytime','Dalc','failures','higher']
-# cols=['school','Medu','studytime','Dalc','failures','higher']
-# cols=['school','Medu','Fedu','studytime','failures','higher']
-# cols=['school','Fedu','studytime','failures','higher'] # same as above for GC1 but higher accuarcy in Kmeans & decisionTree
-# cols=['school','Fedu','studytime','failures','higher'] # same as above for GC1 but higher accuarcy in Kmeans & decisionTree
-
-# cols=['GC1','GC2']  
-# cols=['GC3']
-# cols=['goout','studytime','Mjob','parentsEdu','FailHigh','Medu']# highest for Naive-Bais 63.84
-# cols=['higher','failures','school','age','absences']# highest for SVC 72.30
-# cols=['age','guardian','failures','higher']# highest for dTree 71.53
-
-
-
-
-data = dataPro[cols]
+# data = dataPro[cols1]
+data = dataPro[cols2]
+# data = dataPro[cols3]
 #assigning the Oppurtunity Result column as target
 # tarCol = [' GC1',' GC2',' GC3']
-tarCol= ['GN1']
-target = dataPro[tarCol]
+tarCol1= ['GN1']
+tarCol2= ['GN2']
+tarCol3= ['GN3']
+# target = dataPro[tarCol1]
+target = dataPro[tarCol2]
+# target = dataPro[tarCol3]
 
 # separatione data into train & test
 X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state = 10) #'random_state' just ensures that we get reproducible results every time.
@@ -253,7 +233,7 @@ X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2,
 # sel = SelectKBest(chi2,1)
 # sel.fit(X_train,y_train)
 # print(sel.get_support())
-# # print(sel.scores_)
+# print(sel.scores_)
 
 
 # #Recursive method for feature selection
@@ -267,8 +247,8 @@ X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2,
 sfm= SelectFromModel(LinearSVC(C=0.01, penalty='l2',dual=False))
 sfm.fit(X_train,y_train.values.ravel())
 print(sfm.get_support())
-# # print(recSel.fit(X_train,y_train.values.ravel()))
-# # # print(recSel.score(X_train,y_train))
+# print(recSel.fit(X_train,y_train.values.ravel()))
+# # print(recSel.score(X_train,y_train))
 
 
 
