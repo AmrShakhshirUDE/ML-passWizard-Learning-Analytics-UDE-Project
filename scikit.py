@@ -1,6 +1,9 @@
 #flask
 from flask import Flask, jsonify, request, json,send_file,redirect,url_for,session
 from flask_pymongo import PyMongo
+from bson.json_util import dumps
+from flask_cors import CORS
+from pymongo import MongoClient
 
 import numpy as np
 import pandas as pd
@@ -33,7 +36,7 @@ from sklearn.metrics import accuracy_score
 from sklearn import tree
 
 #Vis. Comparision
-from yellowbrick.classifier import ClassificationReport
+#from yellowbrick.classifier import ClassificationReport
 #Evaluating
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_recall_fscore_support
@@ -42,23 +45,58 @@ from sklearn.metrics import precision_score
 #statistical measures
 from sklearn.feature_selection import SelectKBest, chi2
 
-# f=open('numericalValues.csv')
-# f.readline()  # skip the header
-# data = np.loadtxt(f)
-
+###flask configuration
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/LA"
+CORS(app)
+app.config["MONGO_URI"] = "mongodb://localhost:27017/ladb"
 mongo = PyMongo(app)
 
+@app.route("/alldata")
+def home_page():
+    df = mongo.db.passwizardfe.find()
+    resp = dumps(df)
+    return resp
 
-url="./numValuesComb.csv"
-# dataPro=pd.read_csv(url,error_bad_lines=False)
-dataPro=pd.read_csv(url, sep=' ')
+###database configuration
+server = "127.0.0.1"
+port = 27017
+db = "ladb"
+collection = "passwizard" 
 
-# # newValues
-# aData="./newData.csv"
-# dataApp=pd.read_csv(aData, sep=' ')
+def _connect_mongo(host, port, username, password, db):
+    """ A util for making a connection to mongo """
 
+    if username and password:
+        mongo_uri = 'mongodb://%s:%s@%s:%s/%s' % (username, password, host, port, db)
+        conn = MongoClient(mongo_uri)
+    else:
+        conn = MongoClient(host, port)
+
+
+    return conn[db]
+
+
+def read_mongo(db, collection, query={}, host='localhost', port=27017, username=None, password=None, no_id=True):
+    """ Read from Mongo and Store into DataFrame """
+
+    # Connect to MongoDB
+    db = _connect_mongo(host=host, port=port, username=username, password=password, db=db)
+
+    # Make a query to the specific DB and Collection
+    cursor = db[collection].find(query)
+
+    # Expand the cursor and construct the DataFrame
+    df =  pd.DataFrame(list(cursor))
+
+    # Delete the _id
+    if no_id:
+        del df['_id']
+
+    return df
+#create data object to use in machine learinig part
+dataPro=read_mongo(db, collection)
+
+###machine learning segment
 #Naive-Bais
 def naive_bayes(X_train, X_test, y_train, y_test):
     #create an object of the type GaussianNB
