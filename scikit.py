@@ -55,9 +55,9 @@ url="./numValuesComb.csv"
 # dataPro=pd.read_csv(url,error_bad_lines=False)
 dataPro=pd.read_csv(url, sep=' ')
 
-# newValues
-aData="./newData.csv"
-dataApp=pd.read_csv(aData, sep=' ')
+# # newValues
+# aData="./newData.csv"
+# dataApp=pd.read_csv(aData, sep=' ')
 
 #Naive-Bais
 def naive_bayes(X_train, X_test, y_train, y_test):
@@ -174,7 +174,7 @@ dataPro['PF3']          =le.fit_transform(dataPro['PF3'])
 # cols=['Dalc','school','absences','higher','parentsEdu','failures','WalcAbsence']#PF3~ ch2 2 categories 0.8307 [0.5555 0.8512]
 # cols=['GN1','GN2']#PF3~ 2 categories 0.8846 [0.6666 0.9339]
 # cols=['Dalc','school','absences','higher','parentsEdu','failures','WalcAbsence']#G3~ ch2 3 categories 0.6923 [0.6363 0.6974 0.0000]
-cols=['PF1','PF2','GN1','GN2']#G3~ ch2 3 categories 0.8461 [0.6666 0.8764 0.9411]
+cols=['PF1','PF2','GN1','GN2']#G3~ ch2 3 categories 0.8461 [0.6666 0.8764 0.9411] 
 
 ################################################### END OF 3 CATEGORIES #################################################################
 
