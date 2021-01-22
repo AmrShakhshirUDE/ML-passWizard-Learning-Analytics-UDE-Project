@@ -33,7 +33,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 #Decision Tree
-from sklearn import tree
+from sklearn import tree    
 
 #Vis. Comparision
 #from yellowbrick.classifier import ClassificationReport
@@ -50,12 +50,6 @@ app = Flask(__name__)
 CORS(app)
 app.config["MONGO_URI"] = "mongodb://localhost:27017/ladb"
 mongo = PyMongo(app)
-
-@app.route("/alldata")
-def home_page():
-    df = mongo.db.passwizardfe.find()
-    resp = dumps(df)
-    return resp
 
 ###database configuration
 server = "127.0.0.1"
@@ -233,6 +227,7 @@ X_train, X_test, y_train, y_test = train_test_split(dataPF1, targetPF1, test_siz
 #create an object of type LinearSVC
 svc_model = LinearSVC(random_state=0,dual=False) #instruction to the built-in random number generator to shuffle the data in a specific order
 #train the algorithm on training data and predict using the testing data
+# global modelPF1 
 modelPF1 = svc_model.fit(X_train, y_train.values.ravel())
 predFP1 = modelPF1.predict(X_test)
 print ("SVC PF1 accuracy score : ",accuracy_score(y_test, predFP1))
@@ -292,27 +287,159 @@ print ("SVC G3 accuracy score : ",accuracy_score(y_test, predG3))
 print('precision_support: ',precision_score(y_test, predG3, average=None))
 ##########################################################End G3 model##################################################################
 
-@app.route('/predic/portuguese',methods=['POST'])
-def predict():
+@app.route("/alldata")
+def home_page():
+    df = mongo.db.passwizardfe.find()
+    resp = dumps(df)
+    return resp
+
+@app.route('/predict/por/pf1',methods=['POST'])
+def predictPF1():
     failures    = request.json['failures']
     higher      = request.json['higher']
     Dalc        = request.json['Dalc']
     Walc        = request.json['Walc']
     studytime   = request.json['studytime']
-    WalcAbsence = request.json['WalcAbsence']
     school      = request.json['school']
     absences    = request.json['absences']
-    parentsEdu  = request.json['parentsEdu']
-    PF1         = request.json['PF1']
-    PF2         = request.json['PF2']
 
     sTimeTemp   = (1-(studytime/3)) * 199
-    DalcTemp    = Dalc * 200
-    alcSudyTime = sTimeTemp + DalcTemp
+    alcSudyTime = (sTimeTemp + Dalc * 200)/399
 
     WalcTemp    = Walc * 199
     AbsenceTemp = absences * 200
-    WalcAbsence = WalcTemp + AbsenceTemp
+    WalcAbsence = (WalcTemp + AbsenceTemp)/399
+
+    predFP1 = modelPF1.predict([[school,absences,higher,alcSudyTime,failures,WalcAbsence]])
+    # predFP1 = modelPF1.predict([[0,1,1,0.5,5,0]])
+    # predFP1 = modelPF1.predict([[0,0,0,0.5,0,0]])
+    # print('predFP1')
+    # print(predFP1)
+
+    if predFP1 == 0:
+        res= jsonify({'msg':'there is a chance of 86.36% to fail at the first exam!'})
+    else:
+        res= jsonify({'msg':'there is a chance of 88.89% to pass at the first exam!'})
+    
+    return res
+
+    # return'''
+    # <html>HelloWorld PF1</html'''
+
+
+@app.route('/predict/por/pf2',methods=['POST'])
+def predictPF2():
+    failures    = request.json['failures']
+    higher      = request.json['higher']
+    Walc        = request.json['Walc']
+    absences    = request.json['absences']
+    Fedu        = request.json['Fedu']
+    Medu        = request.json['Medu']
+
+    parentsEdu = (3 * Medu + Fedu)/4
+    WalcAbsence = (Walc * 199 + absences * 200)/399
+
+    predFP2 = modelPF2.predict([[failures,higher,absences,WalcAbsence,parentsEdu]])
+    # predFP2 = modelPF2.predict([[0,1,1,0.5,5]])
+    # print('predFP2')
+    # print(predFP2)
+
+    if predFP2 == 0:
+        res= jsonify({'msg':'there is a chance of 91.67% to fail at the second exam!'})
+    else:
+        res= jsonify({'msg':'there is a chance of 80.51% to pass at the second exam!'})
+    
+    return res
+
+    # return'''
+    # <html>HelloWorld PF2</html'''
+
+@app.route('/predict/por/pf3',methods=['POST'])
+def predictPF3():
+    failures    = request.json['failures']
+    higher      = request.json['higher']
+    Dalc        = request.json['Dalc']
+    Walc        = request.json['Walc']
+    school      = request.json['school']
+    absences    = request.json['absences']
+    Fedu        = request.json['Fedu']
+    Medu        = request.json['Medu']
+
+    parentsEdu = (3 * Medu + Fedu)/4
+    WalcAbsence = (Walc * 199 + absences * 200)/399
+
+    predFP3 = modelPF3.predict([[Dalc,school,absences,higher,parentsEdu,failures,WalcAbsence]])
+    # predFP3 = modelPF3.predict([[0,1,1,0.5,5,0,0]])
+
+    # print('predFP3')
+    # print(predFP3)
+
+    if predFP3 == 0:
+        res= jsonify({'msg':'there is a chance of 55.56% to fail at the final exam!'})
+    else:
+        res= jsonify({'msg':'there is a chance of 85.12% to pass at the final exam!'})
+    
+    return res
+
+
+    # return'''
+    # <html>HelloWorld PF3</html'''
+
+@app.route('/predict/por/G2',methods=['POST'])
+def predictG2():
+    failures    = request.json['failures']
+    higher      = request.json['higher']
+    Walc        = request.json['Walc']
+    absences    = request.json['absences']
+    Fedu        = request.json['Fedu']
+    Medu        = request.json['Medu']
+    PF1         = request.json['PF1']
+    GN2         = request.json['GN2']
+
+    parentsEdu = (3 * Medu + Fedu)/4
+    WalcAbsence = (Walc * 199 + absences * 200)/399
+
+    predG2 = modelG2.predict([[failures,higher,absences,WalcAbsence,parentsEdu,PF1,GN1]])
+    # predG2 = modelG2.predict([[0,1,1,0.5,5,0,0]])
+    # print('predG2')
+    # print(predG2)
+
+    if predG2 == 0:
+        res= jsonify({'msg':'there is a chance of 78.125% to fail at the second exam!'})
+    elif predG2 == 1:
+        res= jsonify({'msg':'there is a chance of 87.8% to pass with a medium grade at the second exam!'})
+    else:
+        res= jsonify({'msg':'there is a chance of 81.25% to pass with a high grade at the second exam!'})
+    
+    return res
+
+
+    # return'''
+    # <html>HelloWorld G2</html'''
+
+@app.route('/predict/por/G3',methods=['POST'])
+def predictG3():
+    PF1         = request.json['PF1']
+    PF2         = request.json['PF2']
+    GN1         = request.json['GN2']
+    GN2         = request.json['GN2']
+
+    predG3 = modelG3.predict([[PF1,PF2,GN1,GN2]])
+    # predG3 = modelG3.predict([[0,1,1,1]])
+    # print('predG3')
+    # print(predG3)
+
+    if predG3 == 0:
+        res= jsonify({'msg':'there is a chance of 66.67% to fail at the final exam!'})
+    elif predG3 == 1:
+        res= jsonify({'msg':'there is a chance of 87.64% to pass with a medium grade at the final exam!'})
+    else:
+        res= jsonify({'msg':'there is a chance of 94.11% to pass with a high grade at the final exam!'})
+    
+    return res
+
+    # return'''
+    # <html>HelloWorld G3</html'''
 
 @app.route('/')  #check connectivity
 def connected():
@@ -323,10 +450,10 @@ def connected():
         <ul>
         <li>Amr Shakhshir</li>
         <li>Baohui Deng</li>
-        <li>Hessamoddin Heidarzadeh</li>
+        <li>Hesamoddin Heidarzadeh</li>
         <li>Tannaz Vahidi</li>
         </ul>
-    </html
+    </html>
     '''
 
 
