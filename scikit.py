@@ -293,7 +293,7 @@ def home_page():
     resp = dumps(df)
     return resp
 
-@app.route('/predict/por/pf1',methods=['POST'])
+@app.route('/predict/por/pf',methods=['POST'])
 def predictPF1():
     failures    = request.json['failures']
     higherR     = request.json['higher']
