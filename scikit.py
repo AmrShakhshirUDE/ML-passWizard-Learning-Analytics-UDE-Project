@@ -315,8 +315,6 @@ def predictPF1():
     parentsEdu = (3 * Medu + Fedu)/4
     WalcAbsence = (Walc * 199 + absences * 200)/399
 
-
-
     predFP1 = modelPF1.predict([[school,absences,higher,alcSudyTime,failures,WalcAbsence]])
     # predFP1 = modelPF1.predict([[0,1,1,0.5,5,0]])
     # predFP1 = modelPF1.predict([[0,0,0,0.5,0,0]])
@@ -368,10 +366,22 @@ def predictG2():
     absences    = request.json['absences']
     Fedu        = request.json['Fedu']
     Medu        = request.json['Medu']
-    PF1         = request.json['PF1']
+    G1          = request.json['G1']
 
     parentsEdu = (3 * Medu + Fedu)/4
     WalcAbsence = (Walc * 199 + absences * 200)/399
+
+    if G1 < 10:
+        PF1 = 0
+    else:
+        PF1 = 1
+    
+    if G1 < 10:
+        GN1 = 0
+    elif GN1 < 15:
+        GN1 = 1
+    else:
+        GN1 = 2
 
     predG2 = modelG2.predict([[failures,higher,absences,WalcAbsence,parentsEdu,PF1,GN1]])
     # predG2 = modelG2.predict([[0,1,1,0.5,5,0,0]])
@@ -393,10 +403,32 @@ def predictG2():
 
 @app.route('/predict/por/G3',methods=['POST'])
 def predictG3():
-    PF1         = request.json['PF1']
-    PF2         = request.json['PF2']
-    GN1         = request.json['GN2']
-    GN2         = request.json['GN2']
+    G1          = request.json['G1']
+    G2          = request.json['G2']
+
+    if G1 < 10:
+        PF1 = 0
+    else:
+        PF1 = 1
+    
+    if G1 < 10:
+        GN1 = 0
+    elif GN1 < 15:
+        GN1 = 1
+    else:
+        GN1 = 2
+
+    if G2 < 10:
+        PF2 = 0
+    else:
+        PF2 = 1
+    
+    if G2 < 10:
+        GN2 = 0
+    elif GN2 < 15:
+        GN2 = 1
+    else:
+        GN2 = 2
 
     predG3 = modelG3.predict([[PF1,PF2,GN1,GN2]])
     # predG3 = modelG3.predict([[0,1,1,1]])
