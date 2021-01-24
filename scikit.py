@@ -328,7 +328,7 @@ def predictPF1():
     # print('predFP2')
     # print(predFP2)
 
-     predFP3 = modelPF3.predict([[Dalc,school,absences,higher,parentsEdu,failures,WalcAbsence]])
+    predFP3 = modelPF3.predict([[Dalc,school,absences,higher,parentsEdu,failures,WalcAbsence]])
     # predFP3 = modelPF3.predict([[0,1,1,0.5,5,0,0]])
     # print('predFP3')
     # print(predFP3)
