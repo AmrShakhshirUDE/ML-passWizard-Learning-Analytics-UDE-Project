@@ -296,13 +296,15 @@ def home_page():
 @app.route('/predict/por/pf1',methods=['POST'])
 def predictPF1():
     failures    = request.json['failures']
-    higher      = request.json['higher']
+    higherR     = request.json['higher']
     Dalc        = request.json['Dalc']
     Walc        = request.json['Walc']
     studytime   = request.json['studytime']
     school      = request.json['school']
     absences    = request.json['absences']
-
+    Fedu        = request.json['Fedu']
+    Medu        = request.json['Medu']
+    
     sTimeTemp   = (1-(studytime/3)) * 199
     alcSudyTime = (sTimeTemp + Dalc * 200)/399
 
@@ -310,80 +312,53 @@ def predictPF1():
     AbsenceTemp = absences * 200
     WalcAbsence = (WalcTemp + AbsenceTemp)/399
 
+    parentsEdu = (3 * Medu + Fedu)/4
+    WalcAbsence = (Walc * 199 + absences * 200)/399
+
+
+
     predFP1 = modelPF1.predict([[school,absences,higher,alcSudyTime,failures,WalcAbsence]])
     # predFP1 = modelPF1.predict([[0,1,1,0.5,5,0]])
     # predFP1 = modelPF1.predict([[0,0,0,0.5,0,0]])
     # print('predFP1')
     # print(predFP1)
 
-    if predFP1 == 0:
-        res= jsonify({'msg':'there is a chance of 86.36% to fail at the first exam!'})
-    else:
-        res= jsonify({'msg':'there is a chance of 88.89% to pass at the first exam!'})
-    
-    return res
-
-    # return'''
-    # <html>HelloWorld PF1</html'''
-
-
-@app.route('/predict/por/pf2',methods=['POST'])
-def predictPF2():
-    failures    = request.json['failures']
-    higher      = request.json['higher']
-    Walc        = request.json['Walc']
-    absences    = request.json['absences']
-    Fedu        = request.json['Fedu']
-    Medu        = request.json['Medu']
-
-    parentsEdu = (3 * Medu + Fedu)/4
-    WalcAbsence = (Walc * 199 + absences * 200)/399
-
     predFP2 = modelPF2.predict([[failures,higher,absences,WalcAbsence,parentsEdu]])
     # predFP2 = modelPF2.predict([[0,1,1,0.5,5]])
     # print('predFP2')
     # print(predFP2)
 
-    if predFP2 == 0:
-        res= jsonify({'msg':'there is a chance of 91.67% to fail at the second exam!'})
-    else:
-        res= jsonify({'msg':'there is a chance of 80.51% to pass at the second exam!'})
-    
-    return res
-
-    # return'''
-    # <html>HelloWorld PF2</html'''
-
-@app.route('/predict/por/pf3',methods=['POST'])
-def predictPF3():
-    failures    = request.json['failures']
-    higher      = request.json['higher']
-    Dalc        = request.json['Dalc']
-    Walc        = request.json['Walc']
-    school      = request.json['school']
-    absences    = request.json['absences']
-    Fedu        = request.json['Fedu']
-    Medu        = request.json['Medu']
-
-    parentsEdu = (3 * Medu + Fedu)/4
-    WalcAbsence = (Walc * 199 + absences * 200)/399
-
-    predFP3 = modelPF3.predict([[Dalc,school,absences,higher,parentsEdu,failures,WalcAbsence]])
+     predFP3 = modelPF3.predict([[Dalc,school,absences,higher,parentsEdu,failures,WalcAbsence]])
     # predFP3 = modelPF3.predict([[0,1,1,0.5,5,0,0]])
-
     # print('predFP3')
     # print(predFP3)
 
-    if predFP3 == 0:
-        res= jsonify({'msg':'there is a chance of 55.56% to fail at the final exam!'})
+    res= jsonify({'msg': 'Valuse have not been assigned properly!!})
+    messageRes=''
+    #add PF1 msg
+    if predFP1 == 0:
+        messageRes += ('there is a chance of 86.36% to fail at the first exam!\n')
     else:
-        res= jsonify({'msg':'there is a chance of 85.12% to pass at the final exam!'})
+        messageRes += ('there is a chance of 88.89% to pass at the first exam!\n')
+    #add PF2 msg
+    if predFP2 == 0:
+        messageRes += ('there is a chance of 91.67% to fail at the second exam!\n')
+    else:
+        messageRes += ('there is a chance of 80.51% to pass at the second exam!\n')
+    #add PF3 msg
+    if predFP3 == 0:
+        messageRes += ('there is a chance of 55.56% to fail at the final exam!')
+    else:
+        messageRes += ('there is a chance of 85.12% to pass at the final exam!')
+    
+    res= jsonify({'msg': messageRes})
+    return res
     
     return res
 
-
     # return'''
-    # <html>HelloWorld PF3</html'''
+    # <html>HelloWorld PF</html'''
+
 
 @app.route('/predict/por/G2',methods=['POST'])
 def predictG2():
@@ -394,7 +369,6 @@ def predictG2():
     Fedu        = request.json['Fedu']
     Medu        = request.json['Medu']
     PF1         = request.json['PF1']
-    GN2         = request.json['GN2']
 
     parentsEdu = (3 * Medu + Fedu)/4
     WalcAbsence = (Walc * 199 + absences * 200)/399
