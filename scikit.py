@@ -295,16 +295,16 @@ def home_page():
 
 @app.route('/predict/por/pf',methods=['POST'])
 def predictPF1():
-    failures    = request.json['failures']
-    higherR     = request.json['higher']
-    Dalc        = request.json['Dalc']
-    Walc        = request.json['Walc']
-    studytime   = request.json['studytime']
-    school      = request.json['school']
-    absences    = request.json['absences']
-    Fedu        = request.json['Fedu']
-    Medu        = request.json['Medu']
-    
+    failures    = int(request.form['failures'])
+    higher      = int(request.form['higher'])
+    Dalc        = int(request.form['Dalc'])
+    Walc        = int(request.form['Walc'])
+    studytime   = int(request.form['studytime'])
+    school      = int(request.form['school'])
+    absences    = int(request.form['absences'])
+    Fedu        = int(request.form['Fedu'])
+    Medu        = int(request.form['Medu'])
+
     sTimeTemp   = (1-(studytime/3)) * 199
     alcSudyTime = (sTimeTemp + Dalc * 200)/399
 
@@ -331,18 +331,18 @@ def predictPF1():
     # print('predFP3')
     # print(predFP3)
 
-    res= jsonify({'msg': 'Valuse have not been assigned properly!!})
+    #res= jsonify({'msg': 'Valuse have not been assigned properly!!})
     messageRes=''
     #add PF1 msg
     if predFP1 == 0:
-        messageRes += ('there is a chance of 86.36% to fail at the first exam!\n')
+        messageRes += ('there is a chance of 86.36% to fail at the first exam!\n ')
     else:
-        messageRes += ('there is a chance of 88.89% to pass at the first exam!\n')
+        messageRes += ('there is a chance of 88.89% to pass at the first exam!\n ')
     #add PF2 msg
     if predFP2 == 0:
-        messageRes += ('there is a chance of 91.67% to fail at the second exam!\n')
+        messageRes += ('there is a chance of 91.67% to fail at the second exam!\n ')
     else:
-        messageRes += ('there is a chance of 80.51% to pass at the second exam!\n')
+        messageRes += ('there is a chance of 80.51% to pass at the second exam!\n ')
     #add PF3 msg
     if predFP3 == 0:
         messageRes += ('there is a chance of 55.56% to fail at the final exam!')
@@ -360,13 +360,13 @@ def predictPF1():
 
 @app.route('/predict/por/G2',methods=['POST'])
 def predictG2():
-    failures    = request.json['failures']
-    higher      = request.json['higher']
-    Walc        = request.json['Walc']
-    absences    = request.json['absences']
-    Fedu        = request.json['Fedu']
-    Medu        = request.json['Medu']
-    G1          = request.json['G1']
+    failures    = int(request.form['failures'])
+    higher      = int(request.form['higher'])
+    Walc        = int(request.form['Walc'])
+    absences    = int(request.form['absences'])
+    Fedu        = int(request.form['Fedu'])
+    Medu        = int(request.form['Medu'])
+    G1          = int(request.form['G1'])
 
     parentsEdu = (3 * Medu + Fedu)/4
     WalcAbsence = (Walc * 199 + absences * 200)/399
@@ -378,7 +378,7 @@ def predictG2():
     
     if G1 < 10:
         GN1 = 0
-    elif GN1 < 15:
+    elif G1>= 10 and G1 < 15:
         GN1 = 1
     else:
         GN1 = 2
@@ -403,8 +403,8 @@ def predictG2():
 
 @app.route('/predict/por/G3',methods=['POST'])
 def predictG3():
-    G1          = request.json['G1']
-    G2          = request.json['G2']
+    G1          = int(request.form['G1'])
+    G2          = int(request.form['G2'])
 
     if G1 < 10:
         PF1 = 0
@@ -413,7 +413,7 @@ def predictG3():
     
     if G1 < 10:
         GN1 = 0
-    elif GN1 < 15:
+    elif G1>=10 and G1 < 15:
         GN1 = 1
     else:
         GN1 = 2
@@ -425,7 +425,7 @@ def predictG3():
     
     if G2 < 10:
         GN2 = 0
-    elif GN2 < 15:
+    elif G2>=10 and G2 < 15:
         GN2 = 1
     else:
         GN2 = 2
@@ -433,7 +433,7 @@ def predictG3():
     predG3 = modelG3.predict([[PF1,PF2,GN1,GN2]])
     # predG3 = modelG3.predict([[0,1,1,1]])
     # print('predG3')
-    # print(predG3)
+    print(predG3)
 
     if predG3 == 0:
         res= jsonify({'msg':'there is a chance of 66.67% to fail at the final exam!'})
