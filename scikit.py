@@ -295,15 +295,15 @@ def home_page():
 
 @app.route('/predict/por/pf',methods=['POST'])
 def predictPF1():
-    failures    = int(request.form['failures'])
-    higher      = int(request.form['higher'])
-    Dalc        = int(request.form['Dalc'])
-    Walc        = int(request.form['Walc'])
-    studytime   = int(request.form['studytime'])
-    school      = int(request.form['school'])
-    absences    = int(request.form['absences'])
-    Fedu        = int(request.form['Fedu'])
-    Medu        = int(request.form['Medu'])
+    failures    = int(request.json['failures'])
+    higher      = int(request.json['higher'])
+    Dalc        = int(request.json['Dalc'])
+    Walc        = int(request.json['Walc'])
+    studytime   = int(request.json['studytime'])
+    school      = int(request.json['school'])
+    absences    = int(request.json['absences'])
+    Fedu        = int(request.json['Fedu'])
+    Medu        = int(request.json['Medu'])
 
     sTimeTemp   = (1-(studytime/3)) * 199
     alcSudyTime = (sTimeTemp + Dalc * 200)/399
@@ -360,13 +360,13 @@ def predictPF1():
 
 @app.route('/predict/por/G2',methods=['POST'])
 def predictG2():
-    failures    = int(request.form['failures'])
-    higher      = int(request.form['higher'])
-    Walc        = int(request.form['Walc'])
-    absences    = int(request.form['absences'])
-    Fedu        = int(request.form['Fedu'])
-    Medu        = int(request.form['Medu'])
-    G1          = int(request.form['G1'])
+    failures    = int(request.json['failures'])
+    higher      = int(request.json['higher'])
+    Walc        = int(request.json['Walc'])
+    absences    = int(request.json['absences'])
+    Fedu        = int(request.json['Fedu'])
+    Medu        = int(request.json['Medu'])
+    G1          = int(request.json['G1'])
 
     parentsEdu = (3 * Medu + Fedu)/4
     WalcAbsence = (Walc * 199 + absences * 200)/399
@@ -403,8 +403,8 @@ def predictG2():
 
 @app.route('/predict/por/G3',methods=['POST'])
 def predictG3():
-    G1          = int(request.form['G1'])
-    G2          = int(request.form['G2'])
+    G1          = int(request.json['G1'])
+    G2          = int(request.json['G2'])
 
     if G1 < 10:
         PF1 = 0
