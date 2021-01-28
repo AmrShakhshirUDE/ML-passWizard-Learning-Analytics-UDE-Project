@@ -97,14 +97,9 @@ def naive_bayes(X_train, X_test, y_train, y_test):
     gnb = GaussianNB()
     #train the algorithm on training data and predict using the testing data
     pred = gnb.fit(X_train, y_train.values.ravel()).predict(X_test)
-    #print(pred.tolist())
     #print the accuracy score of the model
     print("Naive-Bayes accuracy : ",accuracy_score(y_test, pred, normalize = True))
-    # #Precision Score
-    # print('precision_support: ',precision_score(y_test, pred, average='micro'))
-    # #F1 scores
-    # print('precision_recall_fscore_support: ',precision_recall_fscore_support(y_test, pred, average='macro'))
-    # print(f1_score(y_test,pred, average=None))
+
 
 #Support Vector Classification LinearSVC
 def SVC(X_train, X_test, y_train, y_test):
@@ -116,8 +111,7 @@ def SVC(X_train, X_test, y_train, y_test):
     print("LinearSVC accuracy : ",accuracy_score(y_test, pred, normalize = True))
     #Precision Score
     print('precision_support: ',precision_score(y_test, pred, average=None))
-    # #F1 scores
-    # print(f1_score(y_test,pred, average=None))
+
 
 #K-Neighbors Classifier
 def kNeigh(X_train,X_test,y_train, y_test):
@@ -142,57 +136,27 @@ def decTree(X_train,X_test,y_train, y_test):
     print ("Decision Tree accuracy score : ",accuracy_score(y_test, pred))
     #Precision Score
     print('precision_support: ',precision_score(y_test, pred, average=None), dTree.classes_)
-    # print(target.head(18))
-    # print(target.tail(13))
 
 #encoding attributes
 le = preprocessing.LabelEncoder()
+#original features ~ 5
 dataPro['school']       =le.fit_transform(dataPro['school'])
 dataPro['failures']     =le.fit_transform(dataPro['failures'])
 dataPro['higher']       =le.fit_transform(dataPro['higher'])
 dataPro['Dalc']         =le.fit_transform(dataPro['Dalc'])
 dataPro['absences']     =le.fit_transform(dataPro['absences'])
+#merged/ Generated features ~ 3
 dataPro['alcStudyTime'] =le.fit_transform(dataPro['alcStudyTime'])
 dataPro['WalcAbsence']  =le.fit_transform(dataPro['WalcAbsence'])
 dataPro['parentsEdu']   =le.fit_transform(dataPro['parentsEdu'])
+#target values ~ 3
 dataPro['GN1']          =le.fit_transform(dataPro['GN1'])
 dataPro['GN2']          =le.fit_transform(dataPro['GN2'])
 dataPro['GN3']          =le.fit_transform(dataPro['GN3'])
+#derived target values ~ 3
 dataPro['PF1']          =le.fit_transform(dataPro['PF1'])
 dataPro['PF2']          =le.fit_transform(dataPro['PF2'])
 dataPro['PF3']          =le.fit_transform(dataPro['PF3'])
-# dataPro['sex']          =le.fit_transform(dataPro['sex'])
-# dataPro['age']          =le.fit_transform(dataPro['age'])
-# dataPro['address']      =le.fit_transform(dataPro['address'])
-# dataPro['famsize']      =le.fit_transform(dataPro['famsize'])
-# dataPro['Pstatus']      =le.fit_transform(dataPro['Pstatus'])
-# dataPro['Medu']         =le.fit_transform(dataPro['Medu'])
-# dataPro['Fedu']         =le.fit_transform(dataPro['Fedu'])
-# dataPro['Mjob']         =le.fit_transform(dataPro['Mjob'])
-# dataPro['Fjob']         =le.fit_transform(dataPro['Fjob'])
-# dataPro['reason']       =le.fit_transform(dataPro['reason'])
-# dataPro['guardian']     =le.fit_transform(dataPro['guardian'])
-# dataPro['traveltime']   =le.fit_transform(dataPro['traveltime'])
-# dataPro['studytime']    =le.fit_transform(dataPro['studytime'])
-# dataPro['schoolsup']    =le.fit_transform(dataPro['schoolsup'])
-# dataPro['famsup']       =le.fit_transform(dataPro['famsup'])
-# dataPro['paid']         =le.fit_transform(dataPro['paid'])
-# dataPro['activities']   =le.fit_transform(dataPro['activities'])
-# dataPro['nursery']      =le.fit_transform(dataPro['nursery'])
-# dataPro['internet']     =le.fit_transform(dataPro['internet'])
-# dataPro['romantic']     =le.fit_transform(dataPro['romantic'])
-# dataPro['famrel']       =le.fit_transform(dataPro['famrel'])
-# dataPro['freetime']     =le.fit_transform(dataPro['freetime'])
-# dataPro['goout']        =le.fit_transform(dataPro['goout'])
-# dataPro['Walc']         =le.fit_transform(dataPro['Walc'])
-# dataPro['health']       =le.fit_transform(dataPro['health'])
-# dataPro['FailHigh']     =le.fit_transform(dataPro['FailHigh'])
-
-# cols=['school','sex','age','address','famsize','Pstatus','Medu','Fedu','Mjob','Fjob','reason',
-# 'guardian','traveltime','studytime','failures','schoolsup','famsup','paid','activities',
-# 'nursery','higher','internet','romantic','famrel','freetime','goout','Dalc','Walc','health','absences',
-# 'studytime','WalcAbsence','parentsEdu','GN1','GN2']
-
 
 ################################## 3 CATEGORIES [FAIL-MODERATE-HIGH] RATIO 80/20 ################################################
 
@@ -316,46 +280,44 @@ def predictPF1():
     WalcAbsence = (Walc * 199 + absences * 200)/399
 
     predFP1 = modelPF1.predict([[school,absences,higher,alcSudyTime,failures,WalcAbsence]])
-    # predFP1 = modelPF1.predict([[0,1,1,0.5,5,0]])
-    # predFP1 = modelPF1.predict([[0,0,0,0.5,0,0]])
-    # print('predFP1')
-    # print(predFP1)
 
     predFP2 = modelPF2.predict([[failures,higher,absences,WalcAbsence,parentsEdu]])
-    # predFP2 = modelPF2.predict([[0,1,1,0.5,5]])
-    # print('predFP2')
-    # print(predFP2)
 
     predFP3 = modelPF3.predict([[Dalc,school,absences,higher,parentsEdu,failures,WalcAbsence]])
-    # predFP3 = modelPF3.predict([[0,1,1,0.5,5,0,0]])
-    # print('predFP3')
-    # print(predFP3)
 
     #res= jsonify({'msg': 'Valuse have not been assigned properly!!})
-    messageRes=''
+    messageRes1=''
+    messagePer1=''
+    messageRes2=''
+    messagePer2=''
+    messageRes3=''
+    messagePer3=''
     #add PF1 msg
     if predFP1 == 0:
-        messageRes += ('there is a chance of 86.36% to fail at the first exam!\n ')
+        messagePer1 += ('86.36%')
+        messageRes1 += ('fail')
     else:
-        messageRes += ('there is a chance of 88.89% to pass at the first exam!\n ')
+        messagePer1 += ('88.89%')
+        messageRes1 += ('pass')
     #add PF2 msg
     if predFP2 == 0:
-        messageRes += ('there is a chance of 91.67% to fail at the second exam!\n ')
+        messagePer2 += ('91.67%')
+        messageRes2 += ('fail')
     else:
-        messageRes += ('there is a chance of 80.51% to pass at the second exam!\n ')
+        messagePer2 += ('80.51%')
+        messageRes2 += ('pass')
     #add PF3 msg
     if predFP3 == 0:
-        messageRes += ('there is a chance of 55.56% to fail at the final exam!')
+        messagePer3 += ('55.56%')
+        messageRes3 += ('fail')
     else:
-        messageRes += ('there is a chance of 85.12% to pass at the final exam!')
+        messagePer3 += ('85.12%')
+        messageRes3 += ('pass')
     
-    res= jsonify({'msg': messageRes})
+    res= jsonify({'msg1': messagePer1,'msg2': messageRes1,
+                    'msg3': messagePer2,'msg4': messageRes2,
+                    'msg5': messagePer3,'msg6': messageRes3})
     return res
-    
-    return res
-
-    # return'''
-    # <html>HelloWorld PF</html'''
 
 
 @app.route('/predict/por/G2',methods=['POST'])
@@ -384,22 +346,21 @@ def predictG2():
         GN1 = 2
 
     predG2 = modelG2.predict([[failures,higher,absences,WalcAbsence,parentsEdu,PF1,GN1]])
-    # predG2 = modelG2.predict([[0,1,1,0.5,5,0,0]])
-    # print('predG2')
-    # print(predG2)
-
-    if predG2 == 0:
-        res= jsonify({'msg':'there is a chance of 78.125% to fail at the second exam!'})
-    elif predG2 == 1:
-        res= jsonify({'msg':'there is a chance of 87.8% to pass with a medium grade at the second exam!'})
-    else:
-        res= jsonify({'msg':'there is a chance of 81.25% to pass with a high grade at the second exam!'})
     
+    messageResG2=''
+    messagePerG2=''
+    if predG2 == 0:
+        messagePerG2 = ('78.125%')
+        messageResG2 = ('fail')
+    elif predG2 == 1:
+        messagePerG2 = ('87.8%')
+        messageResG2 = ('medium')
+    else:
+        messagePerG2 = ('81.25%')
+        messageResG2 = ('high')
+    
+    res = jsonify({'msg1': messagePerG2,'msg2': messageResG2})
     return res
-
-
-    # return'''
-    # <html>HelloWorld G2</html'''
 
 @app.route('/predict/por/G3',methods=['POST'])
 def predictG3():
@@ -431,21 +392,21 @@ def predictG3():
         GN2 = 2
 
     predG3 = modelG3.predict([[PF1,PF2,GN1,GN2]])
-    # predG3 = modelG3.predict([[0,1,1,1]])
-    # print('predG3')
     print(predG3)
-
+    messageResG3=''
+    messagePerG3=''
     if predG3 == 0:
-        res= jsonify({'msg':'there is a chance of 66.67% to fail at the final exam!'})
+        messagePerG3 = ('66.67%')
+        messageResG3 = ('fail')
     elif predG3 == 1:
-        res= jsonify({'msg':'there is a chance of 87.64% to pass with a medium grade at the final exam!'})
+        messagePerG3 = ('87.64%')
+        messageResG3 = ('medium')
     else:
-        res= jsonify({'msg':'there is a chance of 94.11% to pass with a high grade at the final exam!'})
+        messagePerG3 = ('94.11%')
+        messageResG3 = ('high')
     
+    res = jsonify({'msg1': messagePerG3,'msg2': messageResG3})    
     return res
-
-    # return'''
-    # <html>HelloWorld G3</html'''
 
 @app.route('/')  #check connectivity
 def connected():
