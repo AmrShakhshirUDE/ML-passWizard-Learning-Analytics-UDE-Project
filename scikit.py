@@ -359,7 +359,7 @@ def predictG2():
         messagePerG2 = ('81.25%')
         messageResG2 = ('high')
     
-    res = jsonify({'msg1': messagePerG2,'msg2': messageResG2})
+    res = jsonify({'msg33': messagePerG2,'msg44': messageResG2})
     return res
 
 @app.route('/predict/por/G3',methods=['POST'])
@@ -405,7 +405,7 @@ def predictG3():
         messagePerG3 = ('94.11%')
         messageResG3 = ('high')
     
-    res = jsonify({'msg1': messagePerG3,'msg2': messageResG3})    
+    res = jsonify({'msg55': messagePerG3,'msg66': messageResG3})    
     return res
 
 @app.route('/')  #check connectivity
