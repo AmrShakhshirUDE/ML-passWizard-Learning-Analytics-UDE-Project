@@ -7,8 +7,8 @@ This project is designed to predict students' grades in two secodary schools [Ga
 1. Check how attributes and features are correlated to exams' grades.
 2. Have a clear idea about their predicted grades through an interactive decision trees.
 3. Get the predicted result (fail/ pass) for all exams (first, second, and final) at the beginning of the semester.
-4. Get the predicted result (fail, medium, and high) for second exam after getting first exam's result__ (fail: less than 10, medium: from 10 to less than 15, high: from 15 to 20).
-5. Get the predicted result (fail, medium, and high) for final exam after getting second exam's result__ (fail: less than 10, medium: from 10 to less than 15, high: from 15 to 20).
+4. Get the predicted result (fail, medium, and high) for second exam after getting first exam's result<br />(fail: less than 10, medium: from 10 to less than 15, high: from 15 to 20).
+5. Get the predicted result (fail, medium, and high) for final exam after getting second exam's result<br />(fail: less than 10, medium: from 10 to less than 15, high: from 15 to 20).
 
 # Try on Heroku
 [Pass Wizard](https://passwizard.herokuapp.com/)
