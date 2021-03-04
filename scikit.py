@@ -10,20 +10,21 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-#FeatureSelection using chi2
+#FeatureSelection using chi2 (Used on feature selection phase only)
 from sklearn.feature_selection import SelectKBest, chi2
-#FeatureSelection using recursive
+#FeatureSelection using recursive (Used on feature selection phase only)
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import RFECV
-#FeatureSelection using SelectFromModel
+#FeatureSelection using SelectFromModel (Used on feature selection phase only)
 from sklearn.svm import LinearSVC
 from sklearn.feature_selection import SelectFromModel
 
 from sklearn import datasets
+#Evaluation methods
 from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
+#Preprocess the features
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
 #Naive-Bais
 from sklearn.naive_bayes import GaussianNB
 #LinearSVC "Support Vector Classifier"
@@ -34,16 +35,16 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 #Decision Tree
 from sklearn import tree    
+from sklearn.tree import DecisionTreeClassifier
 
-#Vis. Comparision
+#Vis. Comparision (to generate pdf file for decisionTree)
 #from yellowbrick.classifier import ClassificationReport
+
 #Evaluating
 from sklearn.metrics import f1_score
 from sklearn.metrics import precision_recall_fscore_support
 from sklearn.metrics import precision_score
 
-#statistical measures
-from sklearn.feature_selection import SelectKBest, chi2
 
 ###flask configuration
 app = Flask(__name__)
@@ -89,6 +90,9 @@ def read_mongo(db, collection, query={}, host='localhost', port=27017, username=
     return df
 #create data object to use in machine learinig part
 dataPro=read_mongo(db, collection)
+
+# url="./numValuesComb.csv"
+# dataPro=pd.read_csv(url, sep=' ')
 
 ###machine learning segment
 #Naive-Bais
@@ -259,6 +263,7 @@ def home_page():
 
 @app.route('/predict/por/pf',methods=['POST'])
 def predictPF1():
+    #Receive needed attributes
     failures    = int(request.json['failures'])
     higher      = int(request.json['higher'])
     Dalc        = int(request.json['Dalc'])
@@ -269,15 +274,11 @@ def predictPF1():
     Fedu        = int(request.json['Fedu'])
     Medu        = int(request.json['Medu'])
 
-    sTimeTemp   = (1-(studytime/3)) * 199
-    alcSudyTime = (sTimeTemp + Dalc * 200)/399
+    sTimeTemp   = (1-(studytime/3)) * 199       # Dalc is negatively correlated to PF1, and studyTime positively correlated, invert studyTime val to merge it with Dalc
+    alcSudyTime = (sTimeTemp + Dalc * 200)/399  #Generate alcSudyTime feature using 2 features (sTimeTemp, Dalc)
 
-    WalcTemp    = Walc * 199
-    AbsenceTemp = absences * 200
-    WalcAbsence = (WalcTemp + AbsenceTemp)/399
-
-    parentsEdu = (3 * Medu + Fedu)/4
-    WalcAbsence = (Walc * 199 + absences * 200)/399
+    parentsEdu = (3 * Medu + Fedu)/4                #Generate parentsEdu feature using 2 origin features (Medu, Fedu)
+    WalcAbsence = (Walc * 199 + absences * 200)/399 #Generate WalcAbsence feature using 2 origin features (Walc, absences)
 
     predFP1 = modelPF1.predict([[school,absences,higher,alcSudyTime,failures,WalcAbsence]])
 
@@ -285,7 +286,6 @@ def predictPF1():
 
     predFP3 = modelPF3.predict([[Dalc,school,absences,higher,parentsEdu,failures,WalcAbsence]])
 
-    #res= jsonify({'msg': 'Valuse have not been assigned properly!!})
     messageRes1=''
     messagePer1=''
     messageRes2=''
@@ -294,26 +294,27 @@ def predictPF1():
     messagePer3=''
     #add PF1 msg
     if predFP1 == 0:
-        messagePer1 += ('86.36%')
-        messageRes1 += ('fail')
+        messagePer1 += ('86.36%')   #Precision value of the predected result
+        messageRes1 += ('fail')     #The predected result
     else:
-        messagePer1 += ('88.89%')
-        messageRes1 += ('pass')
+        messagePer1 += ('88.89%')   #Precision value of the predected result
+        messageRes1 += ('pass')     #The predected result
     #add PF2 msg
     if predFP2 == 0:
-        messagePer2 += ('91.67%')
-        messageRes2 += ('fail')
+        messagePer2 += ('91.67%')   #Precision value of the predected result
+        messageRes2 += ('fail')     #The predected result
     else:
-        messagePer2 += ('80.51%')
-        messageRes2 += ('pass')
+        messagePer2 += ('80.51%')   #Precision value of the predected result
+        messageRes2 += ('pass')     #The predected result
     #add PF3 msg
     if predFP3 == 0:
-        messagePer3 += ('55.56%')
-        messageRes3 += ('fail')
+        messagePer3 += ('55.56%')   #Precision value of the predected result
+        messageRes3 += ('fail')     #The predected result
     else:
-        messagePer3 += ('85.12%')
-        messageRes3 += ('pass')
+        messagePer3 += ('85.12%')   #Precision value of the predected result
+        messageRes3 += ('pass')     #The predected result
     
+    #Send result as JSON msg to frontend
     res= jsonify({'msg1': messagePer1,'msg2': messageRes1,
                     'msg3': messagePer2,'msg4': messageRes2,
                     'msg5': messagePer3,'msg6': messageRes3})
@@ -322,6 +323,7 @@ def predictPF1():
 
 @app.route('/predict/por/G2',methods=['POST'])
 def predictG2():
+    #Receive needed attributes
     failures    = int(request.json['failures'])
     higher      = int(request.json['higher'])
     Walc        = int(request.json['Walc'])
@@ -330,11 +332,11 @@ def predictG2():
     Medu        = int(request.json['Medu'])
     G1          = int(request.json['G1'])
 
-    parentsEdu = (3 * Medu + Fedu)/4
-    WalcAbsence = (Walc * 199 + absences * 200)/399
+    parentsEdu = (3 * Medu + Fedu)/4                #Generate parentsEdu feature using 2 origin features (Medu, Fedu)
+    WalcAbsence = (Walc * 199 + absences * 200)/399 #Generate WalcAbsence feature using 2 origin features (Walc, absences)
 
     if G1 < 10:
-        PF1 = 0
+        PF1 = 0 #pass/fail for first exam (generated feature)
     else:
         PF1 = 1
     
@@ -350,25 +352,27 @@ def predictG2():
     messageResG2=''
     messagePerG2=''
     if predG2 == 0:
-        messagePerG2 = ('78.125%')
-        messageResG2 = ('fail')
+        messagePerG2 = ('78.125%')  #Precision value of the predected result
+        messageResG2 = ('fail')     #The predected result
     elif predG2 == 1:
-        messagePerG2 = ('87.8%')
-        messageResG2 = ('medium')
+        messagePerG2 = ('87.8%')    #Precision value of the predected result
+        messageResG2 = ('medium')   #The predected result
     else:
-        messagePerG2 = ('81.25%')
-        messageResG2 = ('high')
+        messagePerG2 = ('81.25%')   #Precision value of the predected result
+        messageResG2 = ('high')     #The predected result
     
+    #Send result as JSON msg to frontend
     res = jsonify({'msg33': messagePerG2,'msg44': messageResG2})
     return res
 
 @app.route('/predict/por/G3',methods=['POST'])
 def predictG3():
+    #Receive needed attributes
     G1          = int(request.json['G1'])
     G2          = int(request.json['G2'])
 
     if G1 < 10:
-        PF1 = 0
+        PF1 = 0 #pass/fail for first exam (generated feature)
     else:
         PF1 = 1
     
@@ -380,7 +384,7 @@ def predictG3():
         GN1 = 2
 
     if G2 < 10:
-        PF2 = 0
+        PF2 = 0 #pass/fail for second exam (generated feature)
     else:
         PF2 = 1
     
@@ -396,15 +400,16 @@ def predictG3():
     messageResG3=''
     messagePerG3=''
     if predG3 == 0:
-        messagePerG3 = ('66.67%')
-        messageResG3 = ('fail')
+        messagePerG3 = ('66.67%')   #Precision value of the predected result
+        messageResG3 = ('fail')     #The predected result
     elif predG3 == 1:
-        messagePerG3 = ('87.64%')
-        messageResG3 = ('medium')
+        messagePerG3 = ('87.64%')   #Precision value of the predected result
+        messageResG3 = ('medium')   #The predected result
     else:
-        messagePerG3 = ('94.11%')
-        messageResG3 = ('high')
+        messagePerG3 = ('94.11%')   #Precision value of the predected result
+        messageResG3 = ('high')     #The predected result
     
+    #Send result as JSON msg to frontend
     res = jsonify({'msg55': messagePerG3,'msg66': messageResG3})    
     return res
 
