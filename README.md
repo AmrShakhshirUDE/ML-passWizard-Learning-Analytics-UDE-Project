@@ -1,18 +1,17 @@
-# Material Land
-This project is designed to facilitate the study process for new students in University of Duisburg-Essen by sharing experience, advices, and helpful files among students.
-> Project for the course: Advanced web technologies, International studies in engineering, Master of computer engineering, University of Duisburg-Essen
+# Pass Wizard
+This project is designed to predict students' grades in two secodary schools [Gabriel Pereira, Mousinho da Silveira] in Portugal in Portuguese Language Course.
+> Project for the course: Learning Analytics, International studies in engineering, Master of computer engineering, University of Duisburg-Essen
 
 # Features
 ## Users can do the following:
-1. Register & login
-2. Change username, password, and personal image
-3. Add posts such as; inquiries and advices
-4. Upload helpful files and materials (only pdf, zip, and images)
-5. Interact on posts by adding comments, like, and dislike
-6. User can update his/her own posts (title, category, contents, and attachment) or remove them. 
+1. Check how attributes and features are correlated to exams' grades
+2. Have a clear idea about their predicted grades through an interactive decision trees
+3. Get the predicted result (fail/ pass) for all exams (first, second, and final) at the beginning of the semester
+4. Get the predicted result (fail, medium, and high) for second exam after getting first exam's result (fail: less than 10, medium: from 10 to less than 15, high: from 15 to 20)
+5. Get the predicted result (fail, medium, and high) for final exam after getting second exam's result (fail: less than 10, medium: from 10 to less than 15, high: from 15 to 20)
 
 # Try on Heroku
-[Material Land](https://flaskpro-advwebtech.herokuapp.com/)
+[Material Land](https://passwizard.herokuapp.com/)
 
 # Live Demo
 [Live demo and screenshots](https://www.youtube.com/watch?v=M09m9P4qvKg)
@@ -23,39 +22,39 @@ This project is designed to facilitate the study process for new students in Uni
 # Screenshots
 >Logo
 
-![logo](https://github.com/AmrShakhshirUDE/testdeployUDE/blob/master/ProjectImages/1.Logo.png)
+![logo](https://github.com/AmrShakhshirUDE/MLpassWizard/1.Logo.png)
 
 >Landing page
 
-![LandingPage](https://github.com/AmrShakhshirUDE/testdeployUDE/blob/master/ProjectImages/2.LandingPage.png)
+![LandingPage](https://github.com/AmrShakhshirUDE/MLpassWizard/2.LandingPage.png)
 
 >Footer
 
-![Footer](https://github.com/AmrShakhshirUDE/testdeployUDE/blob/master/ProjectImages/3.Footer.png)
+![Footer](https://github.com/AmrShakhshirUDE/MLpassWizard/3.Footer.png)
 
 >Dataset
 
-![Dataset](https://github.com/AmrShakhshirUDE/testdeployUDE/blob/master/ProjectImages/4.Datasest.png)
+![Dataset](https://github.com/AmrShakhshirUDE/MLpassWizard/4.Datasest.png)
 
 >Interactive Decision Tree
 
-![Interactive Decision Tree](https://github.com/AmrShakhshirUDE/testdeployUDE/blob/master/ProjectImages/5.Decisiontree.png)
+![Interactive Decision Tree](https://github.com/AmrShakhshirUDE/MLpassWizard/5.Decisiontree.png)
 
 >Prediction page
 
-![PredictionPage](https://github.com/AmrShakhshirUDE/testdeployUDE/blob/master/ProjectImages/6.PredictionPage.png)
+![PredictionPage](https://github.com/AmrShakhshirUDE/MLpassWizard/6.PredictionPage.png)
 
 >Prediction Form
 
-![Prediction Form](https://github.com/AmrShakhshirUDE/testdeployUDE/blob/master/ProjectImages/7.Predictionform.png)
+![Prediction Form](https://github.com/AmrShakhshirUDE/MLpassWizard/7.Predictionform.png)
 
 >Prediction Results
 
-![Prediction Result 1](https://github.com/AmrShakhshirUDE/testdeployUDE/blob/master/ProjectImages/8.PredictionResult1.png)
+![Prediction Result 1](https://github.com/AmrShakhshirUDE/MLpassWizard/8.PredictionResult1.png)
 
-![Prediction Result 2](https://github.com/AmrShakhshirUDE/testdeployUDE/blob/master/ProjectImages/9.PredictionResult2.png)
+![Prediction Result 2](https://github.com/AmrShakhshirUDE/MLpassWizard/9.PredictionResult2.png)
 
-![Prediction Result 3](https://github.com/AmrShakhshirUDE/testdeployUDE/blob/master/ProjectImages/10.PredictionResult3.png)
+![Prediction Result 3](https://github.com/AmrShakhshirUDE/MLpassWizard/10.PredictionResult3.png)
 
 
 # Technical architecture
@@ -80,7 +79,7 @@ The application consists of two main parts:
 * Github
 * Heroku
 
-![Technologies](https://github.com/AmrShakhshirUDE/testdeployUDE/blob/master/ProjectImages/11.Technologies.png)
+![Technologies](https://github.com/AmrShakhshirUDE/MLpassWizard/11.Technologies.png)
 
 
 # How to run the project
