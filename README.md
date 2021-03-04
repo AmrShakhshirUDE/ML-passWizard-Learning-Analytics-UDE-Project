@@ -11,7 +11,7 @@ This project is designed to predict students' grades in two secodary schools [Ga
 5. Get the predicted result (fail, medium, and high) for final exam after getting second exam's result (fail: less than 10, medium: from 10 to less than 15, high: from 15 to 20)
 
 # Try on Heroku
-[Material Land](https://passwizard.herokuapp.com/)
+[Pass Wizard](https://passwizard.herokuapp.com/)
 
 # Live Demo
 [Live demo and screenshots](https://www.youtube.com/watch?v=M09m9P4qvKg)
@@ -22,39 +22,39 @@ This project is designed to predict students' grades in two secodary schools [Ga
 # Screenshots
 >Logo
 
-![logo](https://github.com/AmrShakhshirUDE/MLpassWizard/1.Logo.png)
+![logo](https://github.com/AmrShakhshirUDE/MLpassWizard/blob/main/1.Logo.png)
 
 >Landing page
 
-![LandingPage](https://github.com/AmrShakhshirUDE/MLpassWizard/2.LandingPage.png)
+![LandingPage](https://github.com/AmrShakhshirUDE/MLpassWizard/blob/main/2.LandingPage.png)
 
 >Footer
 
-![Footer](https://github.com/AmrShakhshirUDE/MLpassWizard/3.Footer.png)
+![Footer](https://github.com/AmrShakhshirUDE/MLpassWizard/blob/main/3.Footer.png)
 
 >Dataset
 
-![Dataset](https://github.com/AmrShakhshirUDE/MLpassWizard/4.Datasest.png)
+![Dataset](https://github.com/AmrShakhshirUDE/MLpassWizard/blob/main/4.Datasest.png)
 
 >Interactive Decision Tree
 
-![Interactive Decision Tree](https://github.com/AmrShakhshirUDE/MLpassWizard/5.Decisiontree.png)
+![Interactive Decision Tree](https://github.com/AmrShakhshirUDE/MLpassWizard/blob/main/5.Decisiontree.png)
 
 >Prediction page
 
-![PredictionPage](https://github.com/AmrShakhshirUDE/MLpassWizard/6.PredictionPage.png)
+![PredictionPage](https://github.com/AmrShakhshirUDE/MLpassWizard/blob/main/6.PredictionPage.png)
 
 >Prediction Form
 
-![Prediction Form](https://github.com/AmrShakhshirUDE/MLpassWizard/7.Predictionform.png)
+![Prediction Form](https://github.com/AmrShakhshirUDE/MLpassWizard/blob/main/7.Predictionform.png)
 
 >Prediction Results
 
-![Prediction Result 1](https://github.com/AmrShakhshirUDE/MLpassWizard/8.PredictionResult1.png)
+![Prediction Result 1](https://github.com/AmrShakhshirUDE/MLpassWizard/blob/main/8.PredictionResult1.png)
 
-![Prediction Result 2](https://github.com/AmrShakhshirUDE/MLpassWizard/9.PredictionResult2.png)
+![Prediction Result 2](https://github.com/AmrShakhshirUDE/MLpassWizard/blob/main/9.PredictionResult2.png)
 
-![Prediction Result 3](https://github.com/AmrShakhshirUDE/MLpassWizard/10.PredictionResult3.png)
+![Prediction Result 3](https://github.com/AmrShakhshirUDE/MLpassWizard/blob/main/10.PredictionResult3.png)
 
 
 # Technical architecture
@@ -63,6 +63,7 @@ The application consists of two main parts:
 * Frontend: the part that users interact with it.
 
 # Technologies/ libraries used
+![Technologies](https://github.com/AmrShakhshirUDE/MLpassWizard/blob/main/11.Technologies.png)
 ## Backend technologies
 * Flask
 * MongoDB for database
@@ -78,9 +79,6 @@ The application consists of two main parts:
 * mLab as a cloud database service
 * Github
 * Heroku
-
-![Technologies](https://github.com/AmrShakhshirUDE/MLpassWizard/11.Technologies.png)
-
 
 # How to run the project
 > Make sure that you have mongoDB installed on your PC and we highly recommend you to use visual studio code as a code editor
