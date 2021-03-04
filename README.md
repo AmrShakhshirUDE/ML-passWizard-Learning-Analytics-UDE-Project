@@ -59,7 +59,7 @@ This project is designed to predict students' grades in two secodary schools [Ga
 
 # Technical architecture
 The application consists of two main parts:
-* Backend: responsible for <br />Machine Learning <br />Server-side web application logic, consists of a server, an application, and a database.
+* Backend: responsible for: <br />Machine Learning <br />Server-side web application logic, consists of a server, an application, and a database.
 * Frontend: the part that users interact with it.
 
 # Technologies/ libraries used
