@@ -85,7 +85,7 @@ The application consists of two main parts:
 
 ## To run locally
 > Make sure to have the file `numValuesComb.csv` in the same folder that contains `scikit.py`
-1.Import `allData.csv` to MongoDB. [This] (https://medium.com/analytics-vidhya/import-csv-file-into-mongodb-9b9b86582f34) tutorial will help you.
+1.Import `allData.csv` to MongoDB. [This](https://medium.com/analytics-vidhya/import-csv-file-into-mongodb-9b9b86582f34) tutorial will help you.
 
 2. In the top level directory, go to `scikit.py` file
 
