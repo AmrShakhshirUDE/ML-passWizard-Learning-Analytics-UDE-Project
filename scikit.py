@@ -204,7 +204,6 @@ print('precision_support: ',precision_score(y_test, predFP1, average=None))
 ##########################################################End PF1 model##################################################################
 
 
-
 ##########################################################PF2 model######################################################################
 X_train, X_test, y_train, y_test = train_test_split(dataPF2, targetPF2, test_size=0.2, random_state = 10) #'random_state' just ensures that we get reproducible results every time.
 #create an object of type LinearSVC
@@ -242,6 +241,7 @@ print ("SVC PF3 accuracy score : ",accuracy_score(y_test, predFP3))
 #Precision Score
 print('precision_support: ',precision_score(y_test, predFP3, average=None))
 ##########################################################End PF3 model##################################################################
+
 
 ##########################################################G3 model######################################################################
 X_train, X_test, y_train, y_test = train_test_split(dataG3, targetG3, test_size=0.2, random_state = 10) #'random_state' just ensures that we get reproducible results every time.

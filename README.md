@@ -85,20 +85,28 @@ The application consists of two main parts:
 
 ## To run locally
 > Make sure to have the file `numValuesComb.csv` in the same folder that contains `scikit.py`
-1. In the top level directory, go to `scikit.py` file
+1.Import `allData.csv` to MongoDB. [This] (https://medium.com/analytics-vidhya/import-csv-file-into-mongodb-9b9b86582f34) tutorial will help you.
 
-comment lines [52 to 92]
+2. In the top level directory, go to `scikit.py` file
 
-`app.config["MONGO_URI"] = "mongodb://localhost:27017/ladb"`
+comment lines [67 to 98]
+
+`def _connect_mongo(host, port, username, password, db):`
 until
 `dataPro=read_mongo(db, collection)`
 
-then uncomment lines [94 and 95]
+then uncomment lines [100 and 101]
 
-`url="./numValuesComb.csv"
-dataPro=pd.read_csv(url, sep=' ')`
+```
+url="./numValuesComb.csv"
+dataPro=pd.read_csv(url, sep=' ')
+```
+3. In flask configuration 'app.config["MONGO_URI"] = "mongodb://localhost:27017/ladb"' 
+change the the database name (lab) to the name you chose for your database in step 1
 
-2. Open terminal and go to the path of *scikit.py* then type the following:
+4. In database configuration change the following 'db = "YOUR OWN DB NAME"' and 'collection = "YOUR COLLECTION'S NAME"'
+5. In the route '@app.route("/alldata")' change 'df = mongo.db.YOUR COLLECTION'S NAME.find()'
+6. Open terminal and go to the path of *scikit.py* then type the following:
 ```
 pip install -r requirements.txt
 python scikit.py
@@ -109,21 +117,15 @@ second command will run the backend part of the app
 
 The backend part should be running
 
-3. Go to `client\src\contexts\urlContext.js`
+7. Go to `client\src\contexts\urlContext.js`
 
 comment line.3
 
-`export const UrlContext = createContext('http://20.82.112.97:5000/');`
+`export const UrlContext = createContext('https://passwizardbackend.herokuapp.com/');`
 
 uncomment line.4
 
 `export const UrlContext = createContext('http://127.0.0.1:5000/');`
-
-4. Go to `client\package.json`
-
-on line.41 make sure that proxy value is: `"http://127.0.0.1:5000/"`
-
-5. Open a new terminal and go to the path of client folder
 
 ```
 npm install
