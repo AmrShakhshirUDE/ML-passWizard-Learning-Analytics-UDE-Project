@@ -85,26 +85,13 @@ The application consists of two main parts:
 
 1. Import `allData.csv` to MongoDB. [This](https://medium.com/analytics-vidhya/import-csv-file-into-mongodb-9b9b86582f34) tutorial will help you.
 
-2. In the top level directory, go to `scikit.py` file
+2. In the top level directory, go to `scikit.py` file.
 
-comment lines [67 to 98]
+3. In line.52 `app.config["MONGO_URI"] = "mongodb://localhost:27017/laprobk"` change `laprobk` to the name you've choosen to your DB.
 
-`def _connect_mongo(host, port, username, password, db):`
-until
-`dataPro=read_mongo(db, collection)`
+4. In line.221 in the route `@app.route("/alldata")` change `df = mongo.db.<YOUR COLLECTION'S NAME>.find()`
 
-then uncomment lines [100 and 101]
-
-```
-url="./numValuesComb.csv"
-dataPro=pd.read_csv(url, sep=' ')
-```
-3. In flask configuration `app.config["MONGO_URI"] = "mongodb://localhost:27017/ladb"` <br />
-change the the database name `ladb` to the name you chose for your database in step 1
-
-4. In database configuration change the following <br /> `db = "YOUR OWN DB NAME"` and `collection = "YOUR COLLECTION'S NAME"`
-5. In the route `@app.route("/alldata")` change `df = mongo.db.YOUR COLLECTION'S NAME.find()`
-6. Open terminal and go to the path of `scikit.py` then type the following:
+5. Open terminal and go to the path of `scikit.py` then type the following:
 ```
 pip install -r requirements.txt
 python scikit.py
@@ -115,7 +102,7 @@ python scikit.py
 
 The backend part should be running now.
 
-7. Go to `client\src\contexts\urlContext.js`
+6. Go to `client\src\contexts\urlContext.js`
 
 comment line.3
 
@@ -139,36 +126,39 @@ npm start -- --reset-cache
 then repeat step number 7
 
 ## To deploy
-1. In the top level directory, go to `scikit.py` file
+1. Import `allData.csv` as frontend dataset into Atlas (Cloud DB Service) <br /> 
+and `numValuesComb.csv` as backend dataset into Atlas as a new collection in same database. [This](https://docs.atlas.mongodb.com/import/mongoimport/)tutorial may help you.
 
-comment line.16
+2. In the top level directory, go to `wsgi.py` file
 
-`app.config["MONGO_URI"] = "mongodb://localhost:27017/final"`
+go to line.52 and add `Mongo_URI` you got in step.1 for `allData.csv`
+Also add this uri to line.63 between the parentheses.
 
-then uncomment line.15
+3. In lines [56 to 58] add the credintials for backend collection from step.1.
 
-`app.config["MONGO_URI"] = os.environ.get("MONGODB_URI")`
+4. In line.247 add the collection name for frontend collection.
 
-2. Go to `client\src\contexts\urlContext.js`
+5. Go to `client\src\contexts\urlContext.js`
 
 uncomment line.3
 
-`export const UrlContext = createContext("https://first-attempt-advwebtech-ude.herokuapp.com/");`
+`export const UrlContext = createContext('https://passwizardbackend.herokuapp.com/');`
+Here you should use the link that you'll get when deploying backend part to Heroku (step.7) instead of this link. <br />
+Otherwise you'll be connected to our backend which will work regardless of whether you deployed your backend part properly.
 
 comment line.4
 
-`export const UrlContext = createContext("http://localhost:3000/");`
+`export const UrlContext = createContext("http://localhost:5000/");`
 
 
-3. Seperate 'client' folder from main project folder to be deployed seperately as in the following guide
+6. Seperate 'client' folder from main project folder to be deployed seperately as in the following guide
 
 
-4. follow the guide [Deploy web app to Heroku](https://www.youtube.com/playlist?list=PLpSK06odCvYdSyGkWmc-AdqRc3zmiHPCc), mainly you need to do as follows:
+7. follow the guide [Deploy web app to Heroku](https://www.youtube.com/playlist?list=PLpSK06odCvYdSyGkWmc-AdqRc3zmiHPCc), mainly you need to do as follows:
 * Deploy backend app to heroku after pushing it to github. Please follow the steps in the upmentioned guide
 * Create an account on mLab, currently migrated to mongoDB Atlas, make sure to name database and collection as written in the code, and finally connect backend app to mLab as explained in the upmentioned guide
 * Push client file to a new github repository and deploy it to heroku. Please follow the steps in the upmentioned guide and __note that here you don't need to change url in axios part as you did that on step number 2__
 
-5. On file `package.json` make sure that proxy value is equal to the url of the deployed frontend app on heroku
 
 # Group members
 > <ul><li>Baohui Deng</li> <li>Tannaz Vahidi</li> <li>Amr Shakhshir</li> <li>Hesamoddin Heidarzadeh</li></ul>
