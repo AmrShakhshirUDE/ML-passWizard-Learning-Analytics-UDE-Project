@@ -49,8 +49,39 @@ from sklearn.metrics import precision_score
 ###flask configuration
 app = Flask(__name__)
 CORS(app)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/laprobk"
+app.config["MONGO_URI"] = "mongodb+srv://passwizard:la123@cluster0.oq03l.mongodb.net/ladb?retryWrites=true&w=majority"
+# app.config["MONGO_URI"] = "mongodb+srv://<collectionName>:<password>@<clusterName>.mongodb.net/<dbName>?retryWrites=true&w=majority"
 mongo = PyMongo(app)
+
+###database configuration
+db = "ladb"
+collection = "mldataset" 
+password= "la123"
+
+###Cloud database configuration
+# db = "daName"
+# collection = "collectionName" 
+# password= "cloudPassword"
+
+def read_mongo(db, collection, query={}, username=None, password=password):
+    """ Read from Mongo and Store into DataFrame """
+
+    # client = pymongo.MongoClient("mongodb+srv://<collectionName>:<password>@<clusterName>.mongodb.net/<dbName>?retryWrites=true&w=majority")
+    client = pymongo.MongoClient("mongodb+srv://passwizard:la123@cluster0.oq03l.mongodb.net/ladb?retryWrites=true&w=majority")
+    db = client.ladb
+    client.server_info()
+
+
+    # Make a query to the specific DB and Collection
+    cursor = db[collection].find(query)
+
+    # Expand the cursor and construct the DataFrame
+    df =  pd.DataFrame(list(cursor))
+
+    return df   
+
+# #create data object to use in machine learinig part
+# dataPro=read_mongo(db, collection)
 
 url="./numValuesComb.csv"
 dataPro=pd.read_csv(url, sep=' ')
@@ -218,7 +249,7 @@ print('precision_support: ',precision_score(y_test, predG3, average=None))
 
 @app.route("/alldata")
 def home_page():
-    df = mongo.db.backend.find()
+    df = mongo.db.pwdataset.find()
     resp = dumps(df)
     return resp
 
