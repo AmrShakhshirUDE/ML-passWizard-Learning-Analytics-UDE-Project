@@ -103,9 +103,9 @@ url="./numValuesComb.csv"
 dataPro=pd.read_csv(url, sep=' ')
 ```
 3. In flask configuration `app.config["MONGO_URI"] = "mongodb://localhost:27017/ladb"` <br />
-change the the database name (lab) to the name you chose for your database in step 1
+change the the database name `ladb` to the name you chose for your database in step 1
 
-4. In database configuration change the following <br /> `db = "YOUR OWN DB NAME"' and 'collection = "YOUR COLLECTION'S NAME"`
+4. In database configuration change the following <br /> `db = "YOUR OWN DB NAME"` and `collection = "YOUR COLLECTION'S NAME"`
 5. In the route `@app.route("/alldata")` change `df = mongo.db.YOUR COLLECTION'S NAME.find()`
 6. Open terminal and go to the path of `scikit.py` then type the following:
 ```
@@ -113,10 +113,10 @@ pip install -r requirements.txt
 python scikit.py
 ```
 
-first command will install all required python packages to run this app
+first command will install all required python packages to run this app <br />
 second command will run the backend part of the app
 
-The backend part should be running
+The backend part should be running now.
 
 7. Go to `client\src\contexts\urlContext.js`
 
