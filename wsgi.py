@@ -53,9 +53,9 @@ app.config["MONGO_URI"] = "mongodb+srv://<collectionName>:<password>@<clusterNam
 mongo = PyMongo(app)
 
 ###Cloud database configuration
-# db = "daName"
-# collection = "collectionName" 
-# password= "cloudPassword"
+db = "<daName>"
+collection = "<collectionName>" 
+password= "<cloudPassword>"
 
 def read_mongo(db, collection, query={}, username=None, password=password):
     """ Read from Mongo and Store into DataFrame """
@@ -73,7 +73,7 @@ def read_mongo(db, collection, query={}, username=None, password=password):
 
     return df   
 
-# #create data object to use in machine learinig part
+##create data object to use in machine learinig part
 dataPro=read_mongo(db, collection)
 
 
@@ -240,7 +240,7 @@ print('precision_support: ',precision_score(y_test, predG3, average=None))
 
 @app.route("/alldata")
 def home_page():
-    df = mongo.db.collectionName.find()
+    df = mongo.db.<collectionName>.find()
     resp = dumps(df)
     return resp
 
