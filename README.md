@@ -85,7 +85,8 @@ The application consists of two main parts:
 
 ## To run locally
 > Make sure to have the file `numValuesComb.csv` in the same folder that contains `scikit.py`
-1.Import `allData.csv` to MongoDB. [This](https://medium.com/analytics-vidhya/import-csv-file-into-mongodb-9b9b86582f34) tutorial will help you.
+
+1. Import `allData.csv` to MongoDB. [This](https://medium.com/analytics-vidhya/import-csv-file-into-mongodb-9b9b86582f34) tutorial will help you.
 
 2. In the top level directory, go to `scikit.py` file
 
@@ -101,12 +102,12 @@ then uncomment lines [100 and 101]
 url="./numValuesComb.csv"
 dataPro=pd.read_csv(url, sep=' ')
 ```
-3. In flask configuration 'app.config["MONGO_URI"] = "mongodb://localhost:27017/ladb"' 
+3. In flask configuration `app.config["MONGO_URI"] = "mongodb://localhost:27017/ladb"` <br />
 change the the database name (lab) to the name you chose for your database in step 1
 
-4. In database configuration change the following 'db = "YOUR OWN DB NAME"' and 'collection = "YOUR COLLECTION'S NAME"'
-5. In the route '@app.route("/alldata")' change 'df = mongo.db.YOUR COLLECTION'S NAME.find()'
-6. Open terminal and go to the path of *scikit.py* then type the following:
+4. In database configuration change the following <br /> `db = "YOUR OWN DB NAME"' and 'collection = "YOUR COLLECTION'S NAME"`
+5. In the route `@app.route("/alldata")` change `df = mongo.db.YOUR COLLECTION'S NAME.find()`
+6. Open terminal and go to the path of `scikit.py` then type the following:
 ```
 pip install -r requirements.txt
 python scikit.py
@@ -173,7 +174,7 @@ comment line.4
 5. On file `package.json` make sure that proxy value is equal to the url of the deployed frontend app on heroku
 
 # Group members
-> **Baohui Deng, Tannaz Vahidi, Amr Shakhshir, Hesamoddin Heidarzadeh**
+> <ul>**<li>Baohui Deng</li> <li>Tannaz Vahidi</li> <li>Amr Shakhshir</li> <li>Hesamoddin Heidarzadeh</li>**</ul>
 
 # Dataset source
 P . Cortez and A. Silva. [Using Data Mining to Predict Secondary School Student Performance.](https://archive.ics.uci.edu/ml/datasets/student+performance#) In A. Brito and J. Teixeira Eds., P roc eedings of 5 th FUture BUsiness
