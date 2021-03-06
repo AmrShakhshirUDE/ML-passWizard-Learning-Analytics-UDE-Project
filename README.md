@@ -14,10 +14,7 @@ This project is designed to predict students' grades in two secodary schools [Ga
 [Pass Wizard](https://passwizard.herokuapp.com/)
 
 # Live Demo
-[Live demo and screenshots](https://www.youtube.com/watch?v=M09m9P4qvKg)
-
-# Advertisement
-[Advertisement Video](https://biteable.com/watch/educational-copy-2652764)
+[Live demo and screenshots](https://www.youtube.com/watch?v=USe6Ot3qFys)
 
 # Screenshots
 >Logo
