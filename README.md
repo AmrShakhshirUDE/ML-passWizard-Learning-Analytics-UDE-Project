@@ -113,8 +113,8 @@ pip install -r requirements.txt
 python scikit.py
 ```
 
-first command will install all required python packages to run this app <br />
-second command will run the backend part of the app
+* First command will install all required python packages to run this app <br />
+* Second command will run the backend part of the app
 
 The backend part should be running now.
 
