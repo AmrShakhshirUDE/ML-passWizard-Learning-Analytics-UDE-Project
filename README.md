@@ -127,7 +127,7 @@ then repeat step number 7
 
 ## To deploy
 1. Import `allData.csv` as frontend dataset into Atlas (Cloud DB Service) <br /> 
-and `numValuesComb.csv` as backend dataset into Atlas as a new collection in same database. [This](https://docs.atlas.mongodb.com/import/mongoimport/)tutorial may help you.
+and `numValuesComb.csv` as backend dataset into Atlas as a new collection in same database. [This](https://docs.atlas.mongodb.com/import/mongoimport/) tutorial may help you.
 
 2. In the top level directory, go to `wsgi.py` file
 
