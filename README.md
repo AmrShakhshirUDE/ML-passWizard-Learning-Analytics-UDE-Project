@@ -142,7 +142,7 @@ Also add this uri to line.63 between the parentheses.
 
 uncomment line.3
 
-`export const UrlContext = createContext('https://passwizardbackend.herokuapp.com/');`
+`export const UrlContext = createContext('https://passwizardbackend.herokuapp.com/');` <br />
 Here you should use the link that you'll get when deploying backend part to Heroku (step.7) instead of this link. <br />
 Otherwise you'll be connected to our backend which will work regardless of whether you deployed your backend part properly.
 
