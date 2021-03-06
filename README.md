@@ -139,7 +139,7 @@ npm install rimraf -g
 rimraf node_modules
 npm start -- --reset-cache
 ```
-then repeat step number 5
+then repeat step number 7
 
 ## To deploy
 1. In the top level directory, go to `scikit.py` file
@@ -174,7 +174,7 @@ comment line.4
 5. On file `package.json` make sure that proxy value is equal to the url of the deployed frontend app on heroku
 
 # Group members
-> <ul>**<li>Baohui Deng</li> <li>Tannaz Vahidi</li> <li>Amr Shakhshir</li> <li>Hesamoddin Heidarzadeh</li>**</ul>
+> <ul><li>Baohui Deng</li> <li>Tannaz Vahidi</li> <li>Amr Shakhshir</li> <li>Hesamoddin Heidarzadeh</li></ul>
 
 # Dataset source
 P . Cortez and A. Silva. [Using Data Mining to Predict Secondary School Student Performance.](https://archive.ics.uci.edu/ml/datasets/student+performance#) In A. Brito and J. Teixeira Eds., P roc eedings of 5 th FUture BUsiness
