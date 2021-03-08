@@ -123,7 +123,7 @@ npm install rimraf -g
 rimraf node_modules
 npm start -- --reset-cache
 ```
-then repeat step number 7
+then repeat step number 6
 
 ## To deploy
 1. Import `allData.csv` as frontend dataset into Atlas (Cloud DB Service) <br /> 
