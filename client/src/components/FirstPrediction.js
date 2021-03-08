@@ -12,7 +12,6 @@ import Slider from '@material-ui/core/Slider';
 import {Pie} from 'react-chartjs-2';
 import { UrlContext } from '../contexts/urlContext';
 
-
 export default class FirstPrediction extends Component {
 
   constructor(props) {
@@ -34,8 +33,6 @@ export default class FirstPrediction extends Component {
       fatherEducationVis:'',
       data:[32, 0, 4 , 4],
       'serverUrl': UrlContext._currentValue,
-      
-        
     };
 
     // This binding is necessary to make `this` work in the callback
@@ -57,7 +54,7 @@ export default class FirstPrediction extends Component {
       "Fedu": this.state.FatherEducational,
       "Medu": this.state.MotherEducational,
     };
-    axios.post(this.state.serverUrl +'predict/por/pf', data)
+    axios.post(this.state.serverUrl + `predict/por/pf`, data)
     .then(res => {
       const result = res.data;
       console.log(result)

@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { UrlContext } from '../contexts/urlContext';
 
-
 export default  class LineChart extends Component {
   constructor() {
     super()
@@ -31,13 +30,14 @@ export default  class LineChart extends Component {
       Services3:'',
       Teacher3:'',
      Barchartdata3:'',
+     
      'serverUrl': UrlContext._currentValue,
 
       }
     }
     componentDidMount() {
 
-      axios.get(this.state.serverUrl +'alldata')
+      axios.get(this.state.serverUrl + `alldata`)
       .then(res => {
         const data = res.data;
         this.setState({allInfo:data})

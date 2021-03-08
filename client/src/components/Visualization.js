@@ -30,12 +30,12 @@ export default class Visualization extends Component {
                 <div className="container">
                     {/* <Row className="justify-content-sm-start mt-3 "> */}
                    
-                    <div className="container my-4">
+                    <div className="container my-1">
                         <div className="">
 
                             <div className="card-body">
                                 <p className="card-text">
-                                    <h3 ><strong>You can find some charts here. Let's have a look for better perspective</strong></h3>
+                                    <h4 style={{"color":"#34666F"}} >Take a look in detail at our dataset:</h4>
                                 </p>
                             </div>
                         </div>

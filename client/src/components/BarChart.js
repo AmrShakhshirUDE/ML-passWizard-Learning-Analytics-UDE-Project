@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import {Bar} from 'react-chartjs-2';
 import axios from 'axios';
-
-
-
-
+import { UrlContext } from '../contexts/urlContext';
 
 export default  class BarChart extends Component {
 
@@ -25,13 +22,14 @@ export default  class BarChart extends Component {
         absences2:'',
         Barchartdata:'',
         BarchartdataSecond:'',
-        G2:''
+        G2:'',
+        'serverUrl': UrlContext._currentValue,
       }
     }
 
     componentDidMount() {
 
-      axios.get(`http://20.82.112.97:5000/alldata`)
+      axios.get(this.state.serverUrl + `alldata`)
       .then(res => {
         const data = res.data;
         this.setState({allInfo:data})
@@ -40,7 +38,7 @@ export default  class BarChart extends Component {
 
         // Create a new array based on current state:
         
-        let travelt = [];
+         let travelt = [];
         let studyt = [];
         let freet = [];
         let absencesAmount = [];

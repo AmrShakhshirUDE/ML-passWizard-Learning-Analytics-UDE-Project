@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { UrlContext } from '../contexts/urlContext';
 
-
 export default  class PieChart extends Component {
   constructor() {
     super()
@@ -32,7 +31,7 @@ export default  class PieChart extends Component {
 
     componentDidMount() {
 
-      axios.get(this.state.serverUrl +'alldata')
+      axios.get(this.state.serverUrl + `alldata`)
       .then(res => {
         const data = res.data;
         this.setState({allInfo:data})

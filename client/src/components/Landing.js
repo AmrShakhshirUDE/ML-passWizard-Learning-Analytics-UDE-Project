@@ -27,13 +27,6 @@ import piechart from '../assets/images/piechart.png';
 
 
 
-
-
-
-
-
-
-
 export default class Landing extends Component {
     render() {
         return (
