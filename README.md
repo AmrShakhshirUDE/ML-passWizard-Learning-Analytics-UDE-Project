@@ -157,7 +157,7 @@ comment line.4
 7. follow the guide [Deploy web app to Heroku](https://www.youtube.com/playlist?list=PLpSK06odCvYdSyGkWmc-AdqRc3zmiHPCc), mainly you need to do as follows:
 * Deploy backend app to heroku after pushing it to github. Please follow the steps in the upmentioned guide
 * Create an account on mLab, currently migrated to mongoDB Atlas, make sure to name database and collection as written in the code, and finally connect backend app to mLab as explained in the upmentioned guide
-* Push `PassWizard-master` file to a new github repository and deploy it to heroku. Please follow the steps in the upmentioned guide and __note that here you don't need to change url in axios part as you did that on step number 2__
+* Push `PassWizard-master` file to a new github repository and deploy it to heroku. Please follow the steps in the upmentioned guide and __note that here you don't need to change url in axios part as you did that on step number 5__
 
 
 # Group members
