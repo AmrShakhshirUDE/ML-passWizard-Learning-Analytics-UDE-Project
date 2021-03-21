@@ -12,8 +12,7 @@ This project is designed to predict students' grades in two secodary schools [Ga
 
 # Try on Heroku
 [Pass Wizard](https://passwizard.herokuapp.com/)
-## "It takes several minutes for Heruko to activate both workloads:<br />
-Two different workloads were used in Heroku to deploy this project, one for our backend and one for the frontend.<br /> The first request caused the Heroku to wake up the frontend workload.<br /> Then frontend will send the request to the backend, which subsequently caused Heroku to wake up the backend workload.<br /> So it takes a few minutes before both are operational."
+> "It takes several minutes for Heruko to activate both workloads:<br />Two different workloads were used in Heroku to deploy this project, one for our backend and one for the frontend.<br /> The first request caused the Heroku to wake up the frontend workload.<br /> Then frontend will send the request to the backend, which subsequently caused Heroku to wake up the backend workload.<br /> So it takes a few minutes before both are operational."
 
 # Live Demo
 [Live demo and screenshots](https://www.youtube.com/watch?v=USe6Ot3qFys)
